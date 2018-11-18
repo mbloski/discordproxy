@@ -12,7 +12,7 @@ class Eval
             ret = ret.inspect
           end
 
-          return ret
+          return ret.encode('UTF-8')
         end
       rescue Timeout::Error
         return "Timeout"

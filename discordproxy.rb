@@ -69,8 +69,9 @@ class DiscordProxy
             cnt = message['content'][((token[0]).length + 1)..-1]
             ret = Eval.do_eval(cnt)
             if token[0] == 'meval'
-              ret = '```' + ret.gsub('`', "\u200b`") + '```'
+              ret = '```' + ret + '```'
             end
+
             @api.edit_message(message['channel_id'], message['id'], ret)
           end
         end
