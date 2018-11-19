@@ -9,15 +9,18 @@ require './eval'
 require './api'
 
 require 'json'
+require 'erlang/etf'
 require 'zlib'
 
 $inflater = Zlib::Inflate.new
 $deflater = Zlib::Deflate.new
 
 class DiscordProxy
-  def initialize(bindport, host, port)
+  def initialize(bindport, host, port, format = :json)
     cert = 'fauxdiscord-cert.pem'
     key = 'fauxdiscord-key.pem'
+
+    @format = format
 
     @api = nil
 
@@ -43,21 +46,27 @@ class DiscordProxy
   end
 
   def process_from_discord(str)
-    json = JSON.parse(str)
-    pretty = JSON.pretty_generate(json)
-    Output.Info "D! <<<", (json['t']) || '???'
-
-    if json['t'] == 'MESSAGE_DELETE'
-      json['t'] = 'MESSAGE_REACTION_ADD'
-      json['d']['message_id'] = json['d']['id']
-      #json['d']['user_id'] = '257931869138452481'
-      json['d']['emoji'] = {'name' => "\xF0\x9F\x97\x91", 'id' => nil, 'animated' => false}
-      return json
+    if @format == :etf
+       data = Erlang.binary_to_term(str)
+    elsif @format == :json
+      data = JSON.parse(str)
+    else
+      raise 'unsupported data format'
     end
 
-    if json['t'] == 'MESSAGE_CREATE'
-      # json['d']['author']['username'] / id / discriminator
-      message = json['d']
+    Output.Info "D! <<<", (data['t']) || '???'
+
+    if data['t'] == 'MESSAGE_DELETE'
+      data['t'] = 'MESSAGE_REACTION_ADD'
+      data['d']['message_id'] = data['d']['id']
+      #data['d']['user_id'] = '257931869138452481'
+      data['d']['emoji'] = {'name' => "\xF0\x9F\x97\x91", 'id' => nil, 'animated' => false}
+      return data
+    end
+
+    if data['t'] == 'MESSAGE_CREATE'
+      # data['d']['author']['username'] / id / discriminator
+      message = data['d']
       if message['content'].start_with?('!')
         token = (message['content'][1..-1]).split(' ')
         if token[0] == 'ping'
@@ -77,18 +86,23 @@ class DiscordProxy
         end
       end
     end
-    json
+    data
   end
 
   def process_to_discord(str)
-   json = JSON.parse(str)
-   pretty = JSON.pretty_generate(json)
-
-   op = json['op']
-   if op == 2 or op == 6
-     @api = API.new(json['d']['token'])
+   if @format == :etf
+     data = Erlang.binary_to_term(str)
+   elsif @format == :json
+     data = JSON.parse(str)
+   else
+     raise 'unsupported data format'
    end
-   Output.Info "D! >>>", str
+
+   op = data['op']
+   if op == 2 or op == 6
+     @api = API.new(data['d']['token'])
+   end
+   Output.Info "D! >>>", data.inspect
    return true
   end
 
@@ -138,7 +152,7 @@ class DiscordProxy
         recvdata = $inflater.inflate(@recvbuf)
         pass = process_from_discord(recvdata)
         if not pass.nil?
-          payload = pass.to_json
+          payload = (@format == :etf)? Erlang.term_to_binary(pass) : pass.to_json
           payload = $deflater.deflate(payload, Zlib::SYNC_FLUSH)
           nlen = payload.length
           if nlen > 65535
@@ -169,7 +183,9 @@ class DiscordProxy
       if indic.nil?
         return false
       end
-      if indic.ord == 129
+      f = (indic.ord & 0xF0) >> 4
+      opcode = indic.ord & 0x0F
+      if f == 8 and opcode.ord == 1 or opcode.ord == 2
         len = @pclient.read(1)
         rlen = len.ord & 127
         if rlen == 126
