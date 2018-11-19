@@ -1,0 +1,71 @@
+diff -Naur discord_desktop_core/core/app/data/cacert.pem discord_desktop_core/core-patched/app/data/cacert.pem
+--- discord_desktop_core/core/app/data/cacert.pem	2018-11-19 05:16:27.358424310 +0100
++++ discord_desktop_core/core-patched/app/data/cacert.pem	2018-11-19 05:18:19.761419609 +0100
+@@ -17,6 +17,40 @@
+ ## SHA1: 5df367cda83086392e1acdf22bfef00c48d5eba6
+ ##
+ 
++discordproxy
++============
++-----BEGIN CERTIFICATE-----
++MIIFhTCCA22gAwIBAgIJAKMbxgiX3aL4MA0GCSqGSIb3DQEBCwUAMFkxCzAJBgNV
++BAYTAlBMMREwDwYDVQQIDAhQT0RMQVNJRTEaMBgGA1UECgwRV0FMRSBESVNDT1JE
++IExURC4xGzAZBgNVBAMMEmdhdGV3YXkuZGlzY29yZC5nZzAeFw0xODEwMDYxMzA3
++NDJaFw0yODA4MTQxMzA3NDJaMFkxCzAJBgNVBAYTAlBMMREwDwYDVQQIDAhQT0RM
++QVNJRTEaMBgGA1UECgwRV0FMRSBESVNDT1JEIExURC4xGzAZBgNVBAMMEmdhdGV3
++YXkuZGlzY29yZC5nZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAMQT
++zOCV6Q2uyGPA42JjGRF8AzsGnO6ho6uxgYMKm39ClbJM8QeRphAQdayunChI0RL6
++Oj7wz87tyFYHpL4dopj8I30PNAGCbIKHHcioNjDbf9P/r61sQ5yI7jD2K/leN0wr
++TnMIvJjOFQilN19drlJpZV0PNw8SXfj7nrggPIAfO6c0G/abNkLcZg9s7D4r9pvc
++kf4Oz4W2jN7u0cNNuJhrS1OtHvG/Z+VXok+ppJ83bYvdKWa49WbwT5X27UJA/3CS
++bPFinbSi7Be4gl91aJF0iam2M9J5FR8APtmZ90B6xqQSMUnUPLkxYj5vNHOtNZVM
++6F5fvv9DKfPKQ7g7A3kr8m0EoS1LAG2m4EAhCmXaoU0Rs9KDqg3UHdsGGfk6Kxru
++TQS4ZCPs9F55eX9lRTICOYB/UA0p3WzMO5y2FkNgLBdFDLsRlJVflNTgMTJr5hf8
++uCyC4cM/BwQBFVt7bJsAwzNGTh7CAzeKoDW9xHKGU7+N0XkN6KmBRj9r5qChiwrn
++yF/LOeJiEaOxtPa+Tuqw5MqiGAGqVjz1Utze62Uu32Ws2vmikm5YrIANkP4igEwX
++KRd8FYsRwbU/DL0gVEmPzPg1FyAuT4mDJs2DSvsxmwipf47KfX/PA0F001qaZF1a
++zZB8lBeR2jvObntQH/uECMm89+HDWiRv9AUjgILxAgMBAAGjUDBOMB0GA1UdDgQW
++BBQWasVkR9Bgk9LqZOXKRTacRNcUnDAfBgNVHSMEGDAWgBQWasVkR9Bgk9LqZOXK
++RTacRNcUnDAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4ICAQBET5u02uiC
++qSjLfOFdZYrfPm3Ife4wsbfQ6tgzp1nSmb++JwewSz/E5aC30KJveKuTSKDFvfDX
++BNep6CaHldMB6Z+hIhYUNuEQ3BVF6FN20X+hDrurJ9gxbLd5Z0aucBBe+D7jAyN+
++V7VvPlPfFba1STJ2Rqwby7EPVd4jC5e03D3LoDcU+I514AyrbamVeqeRZwf6I4b/
++6OcQFEYZFjd2ViO+BiboXIEr8ike5AZd31w3x4t1ApFztxrlWylkNC/yLLCH9Var
++kF0p1Qq1MjlPHaa0BHBAvhU32wabEhAED+fFMiZ8tH8W6P4KFImcW9fMDoVcHI//
++Tqybn+VnBVrNPXg/OhRT8yDlPCLrVvMtucOboJ5lKQKNAEDON38Awe7ALvIDbYyl
++D4sZw8dCCj5knaNi6Wrm7AbTg1cxhpv9F95IoPTk7SsUwkKDS8mlhcIiBFcr+GyM
++ECxobTAEAt85oPKRRDVKVjmLjyfxaMbWL6vUUL/obiCN4JvxdVEU8lWnpbugGgOO
++bsW0TN0pqF1odp2fvQEzheDmHoMo6/3k2fU1cevEpjug6cX1zEXdxt3GZq48AW1y
++9uFi+Fjt0Y6q6ltPiAV+Bve0ukr2ce/xtuZ05Ofh1Tt5xKZ5Qb9QoDCtUYfDl5s+
++D8VqwKxskLs15vIPsnRqH4shVuA8cNPAIg==
++-----END CERTIFICATE-----
+ 
+ GlobalSign Root CA
+ ==================
+diff -Naur discord_desktop_core/core/app/mainScreen.js discord_desktop_core/core-patched/app/mainScreen.js
+--- discord_desktop_core/core/app/mainScreen.js	2018-11-19 05:16:27.371424310 +0100
++++ discord_desktop_core/core-patched/app/mainScreen.js	2018-11-19 05:20:03.617415266 +0100
+@@ -329,6 +329,7 @@
+     resizable: true,
+     show: isVisible,
+     webPreferences: {
++      plugins: true,
+       blinkFeatures: 'EnumerateDevices,AudioOutputDevices',
+       nodeIntegration: false,
+       preload: _path2.default.join(__dirname, 'mainScreenPreload.js')
+@@ -342,6 +343,8 @@
+ 
+   applyWindowBoundsToConfig(mainWindowOptions);
+ 
++  _electron.app.commandLine.appendSwitch('--ignore-certificate-errors');
++
+   mainWindow = new _electron.BrowserWindow(mainWindowOptions);
+   mainWindowId = mainWindow.id;
+   global.mainWindowId = mainWindowId;
+@@ -603,4 +606,4 @@
+ 
+ function setMainWindowVisible(visible) {
+   setWindowVisible(visible, false);
+-}
+\ No newline at end of file
++}
