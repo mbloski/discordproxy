@@ -15,6 +15,14 @@ require 'zlib'
 $inflater = Zlib::Inflate.new
 $deflater = Zlib::Deflate.new
 
+# ETF HACK BEGIN
+class String
+  def intern
+    self
+  end
+end
+# ETF HACK END
+
 class DiscordProxy
   def initialize(bindport, host, port, format = :json)
     cert = 'fauxdiscord-cert.pem'
@@ -47,7 +55,7 @@ class DiscordProxy
 
   def process_from_discord(str)
     if @format == :etf
-       data = Erlang.binary_to_term(str)
+       data = eval(Erlang.binary_to_term(str).inspect)
     elsif @format == :json
       data = JSON.parse(str)
     else
@@ -91,7 +99,7 @@ class DiscordProxy
 
   def process_to_discord(str)
    if @format == :etf
-     data = Erlang.binary_to_term(str)
+     data = eval(Erlang.binary_to_term(str).inspect)
    elsif @format == :json
      data = JSON.parse(str)
    else

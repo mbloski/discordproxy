@@ -2,7 +2,7 @@ require './discordproxy.rb'
 
 Output.Info "PROXY", "terrible discord proxy at ur service"
 
-proxy = DiscordProxy.new 443, "104.16.60.37", 443, :json
+proxy = DiscordProxy.new 443, "104.16.60.37", 443, :etf
 
 loop do
   begin
