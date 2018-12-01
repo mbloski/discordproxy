@@ -2,6 +2,7 @@
 
 require 'socket'
 require 'openssl'
+require 'time'
 
 require './output'
 require './eval'
@@ -78,7 +79,7 @@ class DiscordProxy
       if message['content'].start_with?('!')
         token = (message['content'][1..-1]).split(' ')
         if token[0] == 'ping'
-          @api.send_message(message['channel_id'], 'pong')
+          @api.send_message(message['channel_id'], "pong (discordproxy up since #{@start_time.httpdate})")
         end
 
         if message['author']['username'] == 'blo' and message['author']['discriminator'] == '0795'
