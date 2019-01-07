@@ -11,7 +11,7 @@ class API
     uri = URI.parse("https://discordapp.com/api/v6/channels/#{channel}/messages")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    header = {'content-type': 'text/json', 'authorization': @token}
+    header = {'content-type': 'application/json', 'authorization': @token}
     request = Net::HTTP::Post.new(uri.request_uri, header)
     body = {'content': str, 'tts': false}
     request.body = body.to_json
@@ -28,5 +28,15 @@ class API
     body = {'content': str}
     request.body = body.to_json
     return http.request(request)
+  end
+
+  def get_user(id)
+    uri = URI.parse("https://discordapp.com/api/v6/users/#{id}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    request = Net::HTTP::Get.new(uri.request_uri)
+    request.add_field('authorization', @token)
+    response = http.request(request)
+    return JSON.parse(response.body)
   end
 end
