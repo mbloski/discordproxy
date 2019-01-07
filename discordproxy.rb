@@ -16,6 +16,9 @@ require 'zlib'
 $inflater = Zlib::Inflate.new
 $deflater = Zlib::Deflate.new
 
+require 'cgi'
+require "google/cloud/translate"
+
 # ETF HACK BEGIN
 class String
   def intern
@@ -52,6 +55,10 @@ class DiscordProxy
     @socket.connect
     Output.Info "PROXY", "connected to #{host}:#{port}"
     @start_time = Time.now
+
+    @translator = Google::Cloud::Translate.new
+    @translate_input = []
+    @translate_output = []
   end
 
   def process_from_discord(str)
@@ -76,10 +83,16 @@ class DiscordProxy
     if data['t'] == 'MESSAGE_CREATE'
       # data['d']['author']['username'] / id / discriminator
       message = data['d']
+
+      t = @translate_input.find{|x| x[:channel] == message['channel_id']}
+      if not t.nil? and message['author']['username'] == 'blo' and message['author']['discriminator'] == '0795'
+        @api.edit_message(message['channel_id'], message['id'], @translator.translate(message['content'], to: t[:dest_lang]))
+      end
+
       if message['content'].start_with?('!')
         token = (message['content'][1..-1]).split(' ')
-        if token[0] == 'ping'
-          @api.send_message(message['channel_id'], "pong (discordproxy up since #{@start_time.httpdate})")
+        if token[0] == 'ding'
+          @api.send_message(message['channel_id'], "dong (discordproxy up since #{@start_time.httpdate})")
         end
 
         if message['author']['username'] == 'blo' and message['author']['discriminator'] == '0795'
@@ -92,8 +105,46 @@ class DiscordProxy
 
             @api.edit_message(message['channel_id'], message['id'], ret)
           end
+
+          if token[0] == 'toggle_translate_input'
+            h = {:channel => message['channel_id'], :dest_lang => 'en'}
+            if not token[1].nil?
+              h[:dest_lang] = token[1]
+            end
+
+            f = @translate_input.select{|x| x[:channel] == message['channel_id']}
+            if not f.empty?
+              @api.edit_message(message['channel_id'], message['id'], 'Auto-Translate-Input: OFF')
+              @translate_input.delete_if{|x| x[:channel] == message['channel_id']}
+            else
+              @api.edit_message(message['channel_id'], message['id'], 'Auto-Translate-Input: ON')
+              @translate_input << h
+            end
+          end
+
+          if token[0] == 'toggle_translate_output'
+            h = {:channel => message['channel_id'], :dest_lang => 'en'}
+            if not token[1].nil?
+              h[:dest_lang] = token[1]
+            end
+
+            f = @translate_output.select{|x| x[:channel] == message['channel_id']}
+            if not f.empty?
+              @api.edit_message(message['channel_id'], message['id'], 'Auto-Translate-Output: OFF')
+              @translate_output.delete_if{|x| x[:channel] == message['channel_id']}
+            else
+              @api.edit_message(message['channel_id'], message['id'], 'Auto-Translate-Output: ON')
+              @translate_output << h
+            end
+          end
         end
       end
+
+      t = @translate_output.find{|x| x[:channel] == message['channel_id']}
+      if not t.nil? and message['author']['username'] != 'blo' and message['author']['discriminator'] != '0795'
+        data['d']['content'] = CGI.unescapeHTML @translator.translate(message['content'], to: t[:dest_lang]).to_s
+      end
+
     end
     data
   end
