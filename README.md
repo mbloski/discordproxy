@@ -23,7 +23,7 @@ discordproxy is a simple proxy server made specifically for Discord (http://disc
 ## Features
 1. `!ding` - responds with uptime notice
 2. `!eval [code]` - evaluates Ruby code and prints output in current channel
-3. `!meval [code]` - same as `!eval`, but wraps the output in a markdown block
+3. `!beval [code]` - same as `!eval`, but wraps the output in a markdown block
 4. deleted messages get a trash bin reaction instead of being purged
 5. `!toggle_translate_input [lang_code]` - toggles automatic translation of outgoing messages in current channel
 6. `!toggle_translate_output [lang_code]` - toggles automatic translation of incoming messages in current channel

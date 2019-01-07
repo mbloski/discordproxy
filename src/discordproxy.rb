@@ -97,10 +97,10 @@ class DiscordProxy
         end
 
         if message['author']['id'].to_s == @myself['id']
-          if token[0] == 'eval' or token[0] == 'meval'
+          if token[0] == 'eval' or token[0] == 'beval'
             cnt = message['content'][((token[0]).length + 1)..-1]
             ret = Eval.do_eval(cnt)
-            if token[0] == 'meval'
+            if token[0] == 'beval'
               ret = '```' + ret + '```'
             end
 
