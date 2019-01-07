@@ -2,7 +2,7 @@ require './discordproxy.rb'
 
 # Environment for Google Translate API
 ENV["TRANSLATE_PROJECT"]     = "My First Project"
-ENV["TRANSLATE_CREDENTIALS"] = "translate.json"
+ENV["TRANSLATE_CREDENTIALS"] = "../translate.json"
 
 Output.Info "PROXY", "discordproxy at your service"
 

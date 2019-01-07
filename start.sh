@@ -1,3 +1,4 @@
+cd src
 while true
 do
 	ruby proxy.rb

@@ -29,8 +29,8 @@ end
 
 class DiscordProxy
   def initialize(bindport, host, port, format = :json)
-    cert = 'fauxdiscord-cert.pem'
-    key = 'fauxdiscord-key.pem'
+    cert = '../fauxdiscord-cert.pem'
+    key = '../fauxdiscord-key.pem'
 
     @format = format
 
