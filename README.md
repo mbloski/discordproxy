@@ -11,7 +11,7 @@ discordproxy is a simple proxy server made specifically for Discord (http://disc
 ## Installation
 1. unpack core.asar: `asar extract core.asar core/`
 2. patch the discord client using `discord_desktop_core_certificate.patch`
-3. pack core.asar: `asar pack core/ core.asar`
+3. re-pack core.asar: `asar pack core/ core.asar`
 4. add the following entry to your HOSTS file: `127.0.0.1 gateway.discord.gg`
 ---
 - Alternatively, when running Discord in a web browser
