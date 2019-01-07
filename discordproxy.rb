@@ -35,6 +35,7 @@ class DiscordProxy
     @format = format
 
     @api = nil
+    @myself = nil
 
     @recvbuf = String.new
     @toread = -1
@@ -85,7 +86,7 @@ class DiscordProxy
       message = data['d']
 
       t = @translate_input.find{|x| x[:channel] == message['channel_id']}
-      if not t.nil? and message['author']['username'] == 'blo' and message['author']['discriminator'] == '0795'
+      if not t.nil? and message['author']['id'].to_s == @myself['id']
         @api.edit_message(message['channel_id'], message['id'], @translator.translate(message['content'], to: t[:dest_lang]))
       end
 
@@ -95,7 +96,7 @@ class DiscordProxy
           @api.send_message(message['channel_id'], "dong (discordproxy up since #{@start_time.httpdate})")
         end
 
-        if message['author']['username'] == 'blo' and message['author']['discriminator'] == '0795'
+        if message['author']['id'].to_s == @myself['id']
           if token[0] == 'eval' or token[0] == 'meval'
             cnt = message['content'][((token[0]).length + 1)..-1]
             ret = Eval.do_eval(cnt)
@@ -141,7 +142,7 @@ class DiscordProxy
       end
 
       t = @translate_output.find{|x| x[:channel] == message['channel_id']}
-      if not t.nil? and message['author']['username'] != 'blo' and message['author']['discriminator'] != '0795'
+      if not t.nil? and message['author']['id'].to_s != @myself['id']
         data['d']['content'] = CGI.unescapeHTML @translator.translate(message['content'], to: t[:dest_lang]).to_s
       end
 
@@ -161,6 +162,7 @@ class DiscordProxy
    op = data['op']
    if op == 2 or op == 6
      @api = API.new(data['d']['token'])
+     @myself = @api.get_user('@me')
    end
    Output.Info "D! >>>", data.inspect
    return true
