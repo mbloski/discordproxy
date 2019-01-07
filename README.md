@@ -26,4 +26,8 @@ discordproxy is a simple proxy server made specifically for Discord (http://disc
 3. `!toggle_translate_input [lang_code]` - toggles automatic translation of outgoing messages in current channel
 4. `!toggle_translate_output [lang_code]` - toggles automatic translation of incoming messages in current channel
 
+## Disclaimer
+Technically, running discordproxy is against Discord Terms of Service (https://discordapp.com/terms). I take zero responsibility if this gets your account banned.
+
+---
 This software is licensed under the terms of the MIT license.
