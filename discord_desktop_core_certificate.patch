@@ -1,6 +1,6 @@
-diff -Naur discord_desktop_core/core/app/data/cacert.pem discord_desktop_core/core-patched/app/data/cacert.pem
---- discord_desktop_core/core/app/data/cacert.pem	2018-11-19 05:16:27.358424310 +0100
-+++ discord_desktop_core/core-patched/app/data/cacert.pem	2018-11-19 05:18:19.761419609 +0100
+diff -Naur discord_desktop_core/core-original/app/data/cacert.pem discord_desktop_core/core/app/data/cacert.pem
+--- discord_desktop_core/core-original/app/data/cacert.pem	2018-11-19 05:16:27.358424310 +0100
++++ discord_desktop_core/core/app/data/cacert.pem	2018-11-19 05:18:19.761419609 +0100
 @@ -17,6 +17,40 @@
  ## SHA1: 5df367cda83086392e1acdf22bfef00c48d5eba6
  ##
@@ -42,9 +42,9 @@ diff -Naur discord_desktop_core/core/app/data/cacert.pem discord_desktop_core/co
  
  GlobalSign Root CA
  ==================
-diff -Naur discord_desktop_core/core/app/mainScreen.js discord_desktop_core/core-patched/app/mainScreen.js
---- discord_desktop_core/core/app/mainScreen.js	2018-11-19 05:16:27.371424310 +0100
-+++ discord_desktop_core/core-patched/app/mainScreen.js	2018-11-19 05:20:03.617415266 +0100
+diff -Naur discord_desktop_core/core-original/app/mainScreen.js discord_desktop_core/core/app/mainScreen.js
+--- discord_desktop_core/core-original/app/mainScreen.js	2018-11-19 05:16:27.371424310 +0100
++++ discord_desktop_core/core/app/mainScreen.js	2018-11-19 05:20:03.617415266 +0100
 @@ -329,6 +329,7 @@
      resizable: true,
      show: isVisible,
