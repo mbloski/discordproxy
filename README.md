@@ -18,7 +18,7 @@ discordproxy is a simple proxy server made specifically for Discord (http://disc
 1. import the bundled certificate into your web browser
 2. ensure the web browser ignores certificate errors, i.e. Chromium must be run with `--ignore-certificate-errors`
 3. update the HOSTS file
-4. navigate to discordapp.com as usual
+4. navigate to discordapp.com as usual  
 Note: the browser client uses JSON data format in communication with server. The proxy must be initialized with JSON mode: `DiscordProxy.new 443, "104.16.60.37", 443, :json`
 
 ## Features
