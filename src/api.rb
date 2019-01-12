@@ -30,6 +30,16 @@ class API
     return http.request(request)
   end
 
+  def add_reaction(channel, message, emoji)
+    uri = URI.parse("https://discordapp.com/api/v6/channels/#{channel}/messages/#{message}/reactions/#{emoji}/@me")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    request = Net::HTTP::Put.new(uri.request_uri)
+    request.add_field('content-type', 'application/json')
+    request.add_field('authorization', @token)
+    return http.request(request)
+  end
+
   def get_user(id)
     uri = URI.parse("https://discordapp.com/api/v6/users/#{id}")
     http = Net::HTTP.new(uri.host, uri.port)
