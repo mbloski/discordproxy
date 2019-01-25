@@ -13,6 +13,7 @@ discordproxy is a simple proxy server made specifically for Discord (http://disc
 2. patch the discord client using `discord_desktop_core_certificate.patch`
 3. re-pack core.asar: `asar pack core/ core.asar`
 4. add the following entry to your HOSTS file: `127.0.0.1 gateway.discord.gg`
+- Note: it's not necessary to patch the client. You can run discord with `--ignore-certificate-errors` instead: `./Discord --args --ignore-certificate-errors`
 ---
 - Alternatively, when running Discord in a web browser
 1. import the bundled certificate into your web browser
